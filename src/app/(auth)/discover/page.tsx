@@ -5,10 +5,6 @@ import { useEffect, useState } from 'react';
 import { Radar, Search } from 'lucide-react';
 import TrendGrid from '@/components/TrendGrid';
 
-interface Props {
-  userId: string;
-}
-
 const VALID_CATEGORIES = [
   'Startups',
   'SaaS',
@@ -25,7 +21,7 @@ const VALID_CATEGORIES = [
   'Other'
 ];
 
-export default function DiscoverPage({ userId }: Props) {
+export default function DiscoverPage() {
   const searchParams = useSearchParams();
   const selectedCategory = searchParams.get('category') || null;
 
@@ -73,7 +69,7 @@ export default function DiscoverPage({ userId }: Props) {
     return [...input].sort((a, b) => {
       if (sortBy === 'rating') return (b.rating || 0) - (a.rating || 0);
       if (sortBy === 'az') return a.title.localeCompare(b.title);
-      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(); // newest default
+      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
     });
   };
 
@@ -128,7 +124,6 @@ export default function DiscoverPage({ userId }: Props) {
         {/* Main */}
         <main className="flex-1">
           <div className="flex justify-between items-center mb-6 gap-4 flex-wrap">
-            {/* Search */}
             <input
               type="text"
               placeholder="Search trends..."
@@ -137,7 +132,6 @@ export default function DiscoverPage({ userId }: Props) {
               onChange={(e) => setSearchTerm(e.target.value)}
             />
 
-            {/* Sort */}
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
@@ -152,7 +146,9 @@ export default function DiscoverPage({ userId }: Props) {
           {loading ? (
             <div className="flex flex-col items-center justify-center py-20 text-white opacity-80 animate-pulse">
               <Radar className="w-12 h-12 mb-4 text-[#06C19F] animate-spin" />
-              <p className="text-lg font-bold tracking-wide">Scanning the internet for signals...</p>
+              <p className="text-lg font-bold tracking-wide">
+                Scanning the internet for signals...
+              </p>
             </div>
           ) : visibleTrends.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-20 text-[#AAAAAA] gap-4">
@@ -164,7 +160,7 @@ export default function DiscoverPage({ userId }: Props) {
             </div>
           ) : (
             <>
-              <TrendGrid trends={visibleTrends} userId={userId} />
+              <TrendGrid trends={visibleTrends} />
               {visibleCount < filteredAndSortedTrends.length && (
                 <div className="flex justify-center mt-6">
                   <button
