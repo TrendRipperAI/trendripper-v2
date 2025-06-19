@@ -1,0 +1,50 @@
+{
+  "name": "trendripper-v2",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@headlessui/react": "^2.2.4",
+    "@prisma/client": "^6.8.2",
+    "@supabase/ssr": "^0.6.1",
+    "@supabase/supabase-js": "^2.49.8",
+    "axios": "^1.9.0",
+    "better-sqlite3": "^11.10.0",
+    "cheerio": "^1.0.0",
+    "dotenv": "^16.5.0",
+    "encoding": "^0.1.13",
+    "google-trends-api": "^4.9.2",
+    "lucide-react": "^0.513.0",
+    "next": "13.5.6",
+    "node-fetch": "^3.3.2",
+    "openai": "^4.100.0",
+    "puppeteer": "^24.8.2",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-markdown": "^10.1.0",
+    "sonner": "^2.0.3",
+    "uuid": "^11.1.0",
+    "xml2js": "^0.6.2"
+  },
+  "devDependencies": {
+    "@types/cheerio": "^0.22.35",
+    "@types/node": "22.15.17",
+    "@types/react": "19.1.4",
+    "autoprefixer": "^10.4.21",
+    "eslint": "8.49.0",
+    "eslint-config-next": "13.5.6",
+    "postcss": "^8.5.3",
+    "prisma": "^6.8.2",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.1.6"
+  },
+  "optionalDependencies": {
+    "bufferutil": "^4.0.9",
+    "utf-8-validate": "^6.0.5"
+  }
+}
