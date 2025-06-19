@@ -121,7 +121,14 @@ export default function DashboardClient({ userId, accountTier }: Props) {
           ) : trends.length === 0 ? (
             <p className="text-gray-400">You haven’t saved any trends yet.</p>
           ) : (
-            <TrendGrid trends={trends} userId={userId} />
+            <TrendGrid
+              trends={trends.map((t) => ({
+                ...t,
+                rating: t.rating ?? 0,
+                source: t.source ?? 'Reddit',
+              }))}
+              userId={userId}
+            />
           )}
         </section>
 
