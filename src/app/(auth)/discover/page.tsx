@@ -160,7 +160,7 @@ export default function DiscoverPage() {
             </div>
           ) : (
             <>
-              <TrendGrid trends={visibleTrends} />
+              <TrendGrid trends={visibleTrends} userId={userId} />
               {visibleCount < filteredAndSortedTrends.length && (
                 <div className="flex justify-center mt-6">
                   <button
