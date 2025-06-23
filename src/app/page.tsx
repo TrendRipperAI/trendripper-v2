@@ -59,7 +59,7 @@ export default function LandingPage() {
           </Link>
           {!sessionExists && (
             <Link
-              href="/login"
+              href="/sign-in"
               className="border border-white text-white font-bold px-6 py-3 rounded-lg text-lg hover:border-[#06C19F] hover:text-[#06C19F] transition"
             >
               Sign In

@@ -1,10 +1,4 @@
 {
   "/page": "app/page.js",
-  "/sign-up/pro/page": "app/sign-up/pro/page.js",
-  "/sign-up/coming-soon/page": "app/sign-up/coming-soon/page.js",
-  "/sign-in/page": "app/sign-in/page.js",
-  "/sign-up/page": "app/sign-up/page.js",
-  "/legal/terms/page": "app/legal/terms/page.js",
-  "/legal/privacy/page": "app/legal/privacy/page.js",
-  "/(auth)/dashboard/page": "app/(auth)/dashboard/page.js"
+  "/favicon.ico/route": "app/favicon.ico/route.js"
 }

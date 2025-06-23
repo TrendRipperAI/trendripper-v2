@@ -14,17 +14,28 @@ export async function POST(req: NextRequest) {
       orderBy: { createdAt: 'desc' },
     });
 
-    // Dynamically fetch the correct trend data based on source
     const trends = await Promise.all(
       saved.map(async (s) => {
         if (s.source === 'reddit') {
           const trend = await prisma.redditTrend.findUnique({ where: { id: s.trendId } });
-          return trend ? { ...trend, source: 'reddit' } : null;
+          if (!trend) return null;
+
+          return {
+            ...trend,
+            source: 'Reddit',
+            rating: trend.rating ?? 0, // Fallback if missing
+          };
         }
 
         if (s.source === 'producthunt') {
           const trend = await prisma.productHuntTrend.findUnique({ where: { id: s.trendId } });
-          return trend ? { ...trend, source: 'producthunt' } : null;
+          if (!trend) return null;
+
+          return {
+            ...trend,
+            source: 'ProductHunt',
+            rating: trend.rating ?? 0,
+          };
         }
 
         return null;
