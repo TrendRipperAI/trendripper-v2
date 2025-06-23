@@ -5,6 +5,8 @@ import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { supabase } from '@/lib/supabase';
 
+export const dynamic = 'force-dynamic';
+
 export default function BuilderPage() {
   const { id } = useParams();
   const [user, setUser] = useState<{ id: string; token: string } | null>(null);

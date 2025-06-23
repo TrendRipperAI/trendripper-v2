@@ -18,6 +18,8 @@ const markdownComponents = {
   p: ({ children }: any) => <>{children}</>,
 };
 
+export const dynamic = 'force-dynamic';
+
 export default function BuilderPage() {
   const params = useSearchParams();
   const router = useRouter();
