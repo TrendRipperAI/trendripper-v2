@@ -1,0 +1,56 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model RedditTrend {
+  id               String   @id @default(cuid())
+  title            String
+  subreddit        String
+  score            Int
+  url              String
+  createdAt        DateTime @default(now())
+  categories       String[]
+  description      String
+  monetizationIdea String? // AI-generated monetization
+  builderFilter    String? // 🔥 Web developers, HR tech, etc.
+  feasibility      Int? // 🧠 1–5
+  urgency          Int? // ⏰ 1–5
+  rating           Int // 💥 Overall rating
+}
+
+model ProductHuntTrend {
+  id          String   @id @default(cuid())
+  title       String
+  tagline     String
+  url         String   @unique
+  upvotes     Int
+  categories  String[]
+  description String
+  rating      Int
+  createdAt   DateTime @default(now())
+}
+
+model Project {
+  id          String   @id @default(dbgenerated("gen_random_uuid()"))
+  userId      String   @db.Uuid
+  name        String
+  description String
+  category    String
+  createdAt   DateTime @default(now())
+}
+
+model SavedTrend {
+  id        String   @id @default(cuid())
+  userId    String
+  source    String // 'reddit' or 'producthunt'
+  trendId   String
+  createdAt DateTime @default(now())
+
+  @@unique([userId, source, trendId])
+}

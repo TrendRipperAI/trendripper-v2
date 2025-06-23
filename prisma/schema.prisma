@@ -1,6 +1,6 @@
 generator client {
   provider = "prisma-client-js"
-  envVars  = ["DATABASE_URL"]
+  output   = "../generated/client"
 }
 
 datasource db {
@@ -23,7 +23,6 @@ model RedditTrend {
   urgency          Int?      // ⏰ 1–5
   rating           Int       // 💥 Overall rating
 }
-// Forced update to regenerate Prisma client
 
 model ProductHuntTrend {
   id          String    @id @default(cuid())
@@ -50,7 +49,7 @@ model SavedTrend {
   id         String   @id @default(cuid())
   userId     String
   source     String   // 'reddit' or 'producthunt'
-  trendId    String   // The original trend's ID
+  trendId    String
   createdAt  DateTime @default(now())
 
   @@unique([userId, source, trendId])
