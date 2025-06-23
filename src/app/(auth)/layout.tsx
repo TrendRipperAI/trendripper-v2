@@ -3,6 +3,8 @@
 import Header from '@/components/Header';
 import { ProjectProvider } from '@/context/ProjectContext';
 
+export const dynamic = 'force-dynamic';
+
 export default function AuthenticatedLayout({ children }: { children: React.ReactNode }) {
   return (
     <ProjectProvider>
