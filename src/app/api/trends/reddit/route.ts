@@ -5,6 +5,8 @@ import { mockTrends } from '@/lib/mockTrends';
 const prisma = new PrismaClient();
 const useMock = process.env.MOCK_TRENDS === 'true';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   try {
     if (useMock) {
