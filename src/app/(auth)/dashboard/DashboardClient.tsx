@@ -30,6 +30,8 @@ interface Props {
   projects: Project[];
 }
 
+export const dynamic = 'force-dynamic';
+
 export default function DashboardClient({ userId, accountTier }: Props) {
   const router = useRouter();
 
