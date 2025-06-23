@@ -6,6 +6,8 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
+export const dynamic = 'force-dynamic';
+
 export async function POST(req: NextRequest) {
   const useMock = process.env.MOCK_TRENDS === "true";
   const { title, description, category } = await req.json();
