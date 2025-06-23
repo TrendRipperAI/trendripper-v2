@@ -5,11 +5,15 @@ import { createBrowserClient } from '@supabase/ssr';
 import { Settings, Trash2, SunMoon } from 'lucide-react';
 import Link from 'next/link';
 
+const supabase = createBrowserClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+);
+
 export default function SettingsPage() {
   const [user, setUser] = useState<any>(null);
   const [tier, setTier] = useState('Free'); // Placeholder for now
   const [createdAt, setCreatedAt] = useState('');
-  const supabase = createBrowserClient();
 
   useEffect(() => {
     const fetchUser = async () => {
