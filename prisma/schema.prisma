@@ -23,6 +23,7 @@ model RedditTrend {
   urgency          Int?      // ⏰ 1–5
   rating           Int       // 💥 Overall rating
 }
+// Forced update to regenerate Prisma client
 
 model ProductHuntTrend {
   id          String    @id @default(cuid())
