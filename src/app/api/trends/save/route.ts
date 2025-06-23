@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { createServerClient } from '@supabase/ssr';
-import { cookies, headers } from 'next/headers';
+import { cookies } from 'next/headers';
 
 export async function POST(req: NextRequest) {
   try {
@@ -19,9 +19,6 @@ export async function POST(req: NextRequest) {
           get: (key) => cookies().get(key)?.value,
           set: () => {},
           remove: () => {},
-        },
-        headers: {
-          get: (key) => headers().get(key) ?? '',
         },
       }
     );
@@ -65,9 +62,6 @@ export async function DELETE(req: NextRequest) {
           get: (key) => cookies().get(key)?.value,
           set: () => {},
           remove: () => {},
-        },
-        headers: {
-          get: (key) => headers().get(key) ?? '',
         },
       }
     );
