@@ -1,18 +1,23 @@
 import { NextResponse } from 'next/server';
 import { createServerClient } from '@supabase/ssr';
-import { cookies } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 import { PrismaClient } from '@/generated/prisma';
 
 const prisma = new PrismaClient();
 
 export async function POST(req: Request) {
-  const cookieStore = cookies();
-
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
-      cookies: cookieStore,
+      cookies: {
+        get: (key) => cookies().get(key)?.value,
+        set: () => {},
+        remove: () => {},
+      },
+      headers: {
+        get: (key) => headers().get(key) ?? undefined,
+      },
     }
   );
 
@@ -31,10 +36,11 @@ export async function POST(req: Request) {
   }
 
   try {
-    await prisma.savedProductHuntTrend.create({
+    await prisma.savedTrend.create({
       data: {
         userId: user.id,
-        productHuntTrendId,
+        source: 'producthunt',
+        trendId: productHuntTrendId,
       },
     });
 
