@@ -1,5 +1,3 @@
-'use client';
-
 import DashboardClient from './DashboardClient';
 import { cookies } from 'next/headers';
 import { createServerClient } from '@supabase/ssr';
@@ -38,7 +36,7 @@ export default async function DashboardPage() {
     <DashboardClient
       userId={session.user.id}
       accountTier={user?.accountTier || 'free'}
-      projects={[]} // Projects loaded client-side
+      projects={[]} // Client-loaded
     />
   );
 }
