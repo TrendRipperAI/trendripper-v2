@@ -1,4 +1,4 @@
-import { cookies, headers } from 'next/headers';
+import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 import { createServerClient } from '@supabase/ssr';
 
@@ -14,14 +14,7 @@ export async function POST(req: Request) {
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
       process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
       {
-        cookies: {
-          get: (key) => cookies().get(key)?.value,
-          set: () => {}, // no-op on server
-          remove: () => {}, // no-op on server
-        },
-        headers: {
-          get: (key) => headers().get(key) ?? '',
-        },
+        cookies: cookies()
       }
     );
 
@@ -38,7 +31,7 @@ export async function POST(req: Request) {
     const { error: deleteError } = await supabase
       .from('Project')
       .delete()
-      .match({ id, userId: user.id }); // cleaner syntax for compound filter
+      .match({ id, userId: user.id });
 
     if (deleteError) {
       console.error('❌ Failed to delete project:', deleteError);
