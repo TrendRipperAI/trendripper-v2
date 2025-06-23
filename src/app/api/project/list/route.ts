@@ -1,28 +1,17 @@
-// app/api/project/list/route.ts
-import { cookies, headers } from 'next/headers';
+import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 import { createServerClient } from '@supabase/ssr';
 
 export async function GET() {
-  const cookieStore = cookies();
-  const headerStore = headers();
-
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        get: (key) => cookieStore.get(key)?.value,
-        set: () => {},
-        remove: () => {},
-      },
-      headers: {
-        get: (key) => headerStore.get(key) ?? '',
-      },
-    }
-  );
-
   try {
+    const supabase = createServerClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+      {
+        cookies: cookies()
+      }
+    );
+
     const {
       data: { user },
       error: userError,
@@ -34,15 +23,17 @@ export async function GET() {
 
     const { data: projects, error: fetchError } = await supabase
       .from('Project')
-      .select('id, name, description, category, createdAt')
+      .select('*')
       .eq('userId', user.id)
       .order('createdAt', { ascending: false });
 
-    if (fetchError) throw fetchError;
+    if (fetchError) {
+      return NextResponse.json({ error: 'Failed to fetch projects' }, { status: 500 });
+    }
 
     return NextResponse.json({ projects });
   } catch (err) {
-    console.error('[GET PROJECTS ERROR]', err);
-    return NextResponse.json({ error: 'Server error' }, { status: 500 });
+    console.error('❌ Server Error:', err);
+    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }
 }
