@@ -12,10 +12,10 @@ export default async function DashboardPage() {
 
   const userId = session?.user?.id || '';
 
-  // Optional: Fetch user account tier from your DB if needed
-  const accountTier = 'free'; // Hardcoded for now, update later if needed
+  // TEMP: Hardcoded account tier
+  const accountTier = 'free';
 
-  // Optional: Fetch user projects
+  // Fetch all projects for this user
   const projects = await prisma.project.findMany({
     where: { userId },
     orderBy: { createdAt: 'desc' },
