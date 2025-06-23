@@ -1,14 +1,11 @@
 import { NextResponse } from "next/server";
-import { getGoogleTrends } from "@/lib/googleTrends";
+
+export const dynamic = 'force-dynamic';
 
 export async function GET() {
-  try {
-    console.log("🔥 API route hit: /api/trends/google");
-
-    const trends = await getGoogleTrends();
-    return NextResponse.json(trends);
-  } catch (error) {
-    console.error("🔥 API route failed:", error);
-    return NextResponse.json({ error: "Failed to fetch trends" }, { status: 500 });
-  }
+  // Temporarily disabled due to 404 errors from Google Trends source
+  return NextResponse.json(
+    { error: "Google Trends temporarily disabled due to 404 errors." },
+    { status: 503 }
+  );
 }

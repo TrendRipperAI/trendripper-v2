@@ -3,6 +3,8 @@ import { prisma } from '@/lib/prisma';
 import { createServerClient } from '@supabase/ssr';
 import { cookies } from 'next/headers';
 
+export const dynamic = 'force-dynamic';
+
 export async function POST(req: NextRequest) {
   try {
     const { trendId, source } = await req.json();

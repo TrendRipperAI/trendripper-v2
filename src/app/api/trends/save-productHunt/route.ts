@@ -5,6 +5,8 @@ import { PrismaClient } from '@/generated/client';
 
 const prisma = new PrismaClient();
 
+export const dynamic = 'force-dynamic';
+
 export async function POST(req: Request) {
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,

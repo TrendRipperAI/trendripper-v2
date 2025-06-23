@@ -2,14 +2,14 @@ import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 import { createServerClient } from '@supabase/ssr';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   try {
     const supabase = createServerClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
       process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-      {
-        cookies: cookies()
-      }
+      { cookies: cookies() }
     );
 
     const {
@@ -28,7 +28,7 @@ export async function GET() {
       .order('createdAt', { ascending: false });
 
     if (fetchError) {
-      return NextResponse.json({ error: 'Failed to fetch projects' }, { status: 500 });
+      return NextResponse.json({ error: fetchError.message || 'Failed to fetch projects' }, { status: 500 });
     }
 
     return NextResponse.json({ projects });
