@@ -121,7 +121,14 @@ export default function DashboardClient({ userId, accountTier }: Props) {
           ) : trends.length === 0 ? (
             <p className="text-gray-400">You haven’t saved any trends yet.</p>
           ) : (
-            <TrendGrid trends={trends as any} userId={userId} />
+            <TrendGrid
+              trends={trends.map((t) => ({
+                ...t,
+                rating: (t as any).rating ?? 0,
+                source: (t as any).source ?? 'Reddit',
+              }))}
+              userId={userId}
+            />
           )}
         </section>
 
@@ -210,7 +217,6 @@ export default function DashboardClient({ userId, accountTier }: Props) {
 
       {/* RIGHT COLUMN: Stats + Rip Credits + Top Trend */}
       <div className="flex flex-col gap-6 self-start h-fit sticky top-20">
-        {/* Stats Tracker */}
         <div className="bg-[#1e252e] w-[280px] rounded-2xl border border-[#06C19F] p-6 shadow-lg flex flex-col gap-6">
           <h2 className="text-white text-xl font-bold flex items-center gap-2">
             <BarChart3 className="w-6 h-6 text-[#06C19F]" />
@@ -265,7 +271,7 @@ export default function DashboardClient({ userId, accountTier }: Props) {
           </button>
         </div>
 
-        {/* Today's Top Trend */}
+        {/* Top Trend */}
         {trends.length > 0 && (
           <div className="bg-[#1e252e] w-[280px] rounded-2xl border border-[#06C19F] p-4 shadow-lg flex flex-col gap-3">
             <h2 className="text-white text-lg font-bold flex items-center gap-2">
@@ -274,10 +280,14 @@ export default function DashboardClient({ userId, accountTier }: Props) {
             </h2>
             <div className="bg-[#15171f] rounded-xl p-4 border border-[#2b2d31]">
               <div className="text-xs text-[#06C19F] font-bold uppercase mb-2">
-                {trends[0].category}
+                {(trends[0] as any).category ?? 'AI'}
               </div>
-              <h3 className="text-white font-bold text-sm mb-1">{trends[0].title}</h3>
-              <p className="text-xs text-[#CCCCCC] line-clamp-3 mb-3">{trends[0].description}</p>
+              <h3 className="text-white font-bold text-sm mb-1">
+                {(trends[0] as any).title}
+              </h3>
+              <p className="text-xs text-[#CCCCCC] line-clamp-3 mb-3">
+                {(trends[0] as any).description}
+              </p>
               <button
                 onClick={() => router.push('/discover')}
                 className="w-full bg-[#06C19F] text-black font-semibold text-xs py-1.5 rounded-xl hover:bg-opacity-90 transition"
