@@ -1,4 +1,4 @@
-import { PrismaClient } from '@/generated/prisma';
+import { PrismaClient } from '@/generated/client';
 import { NextResponse } from 'next/server';
 import { mockTrends } from '@/lib/mockTrends';
 

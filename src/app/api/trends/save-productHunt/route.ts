@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { createServerClient } from '@supabase/ssr';
 import { cookies } from 'next/headers';
-import { PrismaClient } from '@/generated/prisma';
+import { PrismaClient } from '@/generated/client';
 
 const prisma = new PrismaClient();
 
