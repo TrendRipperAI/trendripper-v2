@@ -11,21 +11,24 @@ export default async function DashboardPage() {
   } = await supabase.auth.getSession();
 
   const userId = session?.user?.id || '';
-
-  // TEMP: Hardcoded account tier
   const accountTier = 'free';
 
-  // Fetch all projects for this user
   const projects = await prisma.project.findMany({
     where: { userId },
     orderBy: { createdAt: 'desc' },
   });
 
+  // 👇 Convert Date objects to string for client compatibility
+  const safeProjects = projects.map((project) => ({
+    ...project,
+    createdAt: project.createdAt.toISOString(),
+  }));
+
   return (
     <DashboardClient
       userId={userId}
       accountTier={accountTier}
-      projects={projects}
+      projects={safeProjects}
     />
   );
 }
