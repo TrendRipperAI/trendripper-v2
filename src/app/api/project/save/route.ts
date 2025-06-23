@@ -1,24 +1,15 @@
-import { cookies, headers } from 'next/headers';
+import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 import { createServerClient } from '@supabase/ssr';
 
 export async function POST(req: Request) {
-  // 🟢 Extract cookies/headers BEFORE touching body
   const cookieStore = cookies();
-  const headerStore = headers();
 
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
-      cookies: {
-        get: (key) => cookieStore.get(key)?.value,
-        set: () => {},
-        remove: () => {},
-      },
-      headers: {
-        get: (key) => headerStore.get(key) ?? '',
-      },
+      cookies: cookieStore,
     }
   );
 
@@ -41,7 +32,6 @@ export async function POST(req: Request) {
 
     console.log('✅ Supabase User ID:', user.id);
 
-    // 🔍 Check for existing project
     const { data: existingProject, error: fetchError } = await supabase
       .from('Project')
       .select('id')
@@ -61,7 +51,6 @@ export async function POST(req: Request) {
       return NextResponse.json({ success: true });
     }
 
-    // ✅ Insert new project
     const { error: insertError } = await supabase.from('Project').insert([
       {
         userId: user.id,
