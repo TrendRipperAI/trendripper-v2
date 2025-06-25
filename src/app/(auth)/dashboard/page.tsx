@@ -4,6 +4,8 @@ import { cookies } from 'next/headers';
 import DashboardClient from './DashboardClient';
 import { prisma } from '@/lib/prisma';
 
+export const dynamic = 'force-dynamic';
+
 export default async function DashboardPage() {
   const supabase = createServerComponentClient({ cookies });
   const {
