@@ -4,6 +4,8 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import DiscoverClient from './DiscoverClient';
 
+export const dynamic = 'force-dynamic';
+
 export default async function DiscoverPage() {
   const supabase = createServerComponentClient({ cookies });
   const {
