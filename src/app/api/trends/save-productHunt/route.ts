@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { createServerClient } from '@supabase/ssr';
-import { cookies } from 'next/headers';
+import { cookies as nextCookies } from 'next/headers';
 import { PrismaClient } from '@/generated/client';
 
 const prisma = new PrismaClient();
@@ -8,15 +8,13 @@ const prisma = new PrismaClient();
 export const dynamic = 'force-dynamic';
 
 export async function POST(req: Request) {
+  const cookieStore = nextCookies();
+
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
-      cookies: {
-        get: (key) => cookies().get(key)?.value,
-        set: () => {},
-        remove: () => {},
-      },
+      cookies: cookieStore,
     }
   );
 

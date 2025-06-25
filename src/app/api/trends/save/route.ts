@@ -1,7 +1,7 @@
+import { cookies as nextCookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { createServerClient } from '@supabase/ssr';
-import { cookies } from 'next/headers';
 
 export const dynamic = 'force-dynamic';
 
@@ -13,15 +13,13 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Missing trendId or source' }, { status: 400 });
     }
 
+    const cookiesList = nextCookies();
+
     const supabase = createServerClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
       process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
       {
-        cookies: {
-          get: (key) => cookies().get(key)?.value,
-          set: () => {},
-          remove: () => {},
-        },
+        cookies: cookiesList,
       }
     );
 
@@ -56,15 +54,13 @@ export async function DELETE(req: NextRequest) {
       return NextResponse.json({ error: 'Missing trendId or source' }, { status: 400 });
     }
 
+    const cookiesList = nextCookies();
+
     const supabase = createServerClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
       process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
       {
-        cookies: {
-          get: (key) => cookies().get(key)?.value,
-          set: () => {},
-          remove: () => {},
-        },
+        cookies: cookiesList,
       }
     );
 

@@ -1,6 +1,8 @@
-import { cookies } from 'next/headers';
+import { cookies as nextCookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 import { createServerClient } from '@supabase/ssr';
+
+export const dynamic = 'force-dynamic';
 
 export async function POST(req: Request) {
   try {
@@ -10,14 +12,17 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Missing project ID.' }, { status: 400 });
     }
 
+    // Get cookies from Next.js headers API
+    const cookiesList = nextCookies();
+
+    // Create supabase client passing cookies explicitly
     const supabase = createServerClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
       process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-      {
-        cookies: cookies()
-      }
+      { cookies: cookiesList }
     );
 
+    // Get authenticated user session
     const {
       data: { user },
       error: userError,
@@ -28,6 +33,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
+    // Delete project with matching id and userId
     const { error: deleteError } = await supabase
       .from('Project')
       .delete()
